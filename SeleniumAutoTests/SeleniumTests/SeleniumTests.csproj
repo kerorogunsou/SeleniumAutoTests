@@ -69,15 +69,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Page.cs" />
-    <Compile Include="DocCalculatorPage.cs" />
-    <Compile Include="DocCalculatorTest.cs" />
-    <Compile Include="InterpretingOfferPage.cs" />
-    <Compile Include="InterpretingOfferTest.cs" />
-    <Compile Include="MainPage.cs" />
-    <Compile Include="MainPageTest.cs" />
+    <Compile Include="BaseClasses\PageBase.cs" />
+    <Compile Include="Pages\DocCalculatorPage.cs" />
+    <Compile Include="Tests\DocCalculatorTest.cs" />
+    <Compile Include="Pages\InterpretingOfferPage.cs" />
+    <Compile Include="Tests\InterpretingOfferTest.cs" />
+    <Compile Include="Pages\MainPage.cs" />
+    <Compile Include="Tests\MainPageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestBase.cs" />
+    <Compile Include="BaseClasses\TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

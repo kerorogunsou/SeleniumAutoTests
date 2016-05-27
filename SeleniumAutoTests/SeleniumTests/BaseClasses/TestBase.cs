@@ -1,19 +1,25 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using NUnit.Framework.Interfaces;
-using System;
+﻿using System;
 using System.Drawing.Imaging;
+
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+
+using OpenQA.Selenium;
+
 
 namespace SeleniumTests
 {
     public abstract class TestBase
     {
         protected IWebDriver _driver;
-        Page _page = new Page();
+
+        private PageBase _page;
 
         [Test]
         public void CheckPhone()
         {
+            TestContext.WriteLine("\tphone check");
+
             var phoneLabels = _page.PhoneLabels(_driver);
             var phoneIsVisible = phoneLabels.Exists(p => p.GetCssValue("display") != "none");
             Assert.IsTrue(phoneIsVisible, "Phone number is not visible");
@@ -22,11 +28,18 @@ namespace SeleniumTests
         [Test]
         public void CheckLanguages()
         {
+            TestContext.WriteLine("\tlanguage dropdown check");
+
             var languageOptions = _page.LanguageDropdownItems(_driver);
-            Assert.IsTrue(languageOptions.Exists(p => p.GetAttribute("alt") == "RU"), "Language menu doesnt contain russian lanuage");
-            Assert.IsTrue(languageOptions.Exists(p => p.GetAttribute("alt") == "ENG"), "Language menu doesnt contain english lanuage");
-            Assert.IsTrue(languageOptions.Exists(p => p.GetAttribute("alt") == "DE"), "Language menu doesnt contain german lanuage");
-            Assert.IsTrue(languageOptions.Exists(p => p.GetAttribute("alt") == "UK"), "Language menu doesnt contain ukraine lanuage");
+
+            Assert.IsTrue(languageOptions.Exists(p => p.GetAttribute("alt") == "RU"), 
+                "Language menu doesnt contain russian lanuage");
+            Assert.IsTrue(languageOptions.Exists(p => p.GetAttribute("alt") == "ENG"), 
+                "Language menu doesnt contain english lanuage");
+            Assert.IsTrue(languageOptions.Exists(p => p.GetAttribute("alt") == "DE"), 
+                "Language menu doesnt contain german lanuage");
+            Assert.IsTrue(languageOptions.Exists(p => p.GetAttribute("alt") == "UK"), 
+                "Language menu doesnt contain ukraine lanuage");
         }
 
         [TearDown]
@@ -39,7 +52,8 @@ namespace SeleniumTests
             }
             else if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-                string errorInfo = TestContext.CurrentContext.Result.Message.Split(new char[] { '\n', '\r' })[0];
+                string errorInfo = TestContext.CurrentContext.Result.Message;
+                errorInfo = errorInfo.Split(new char[] { '\n', '\r' })[0];
                 TakeScreenshot(errorInfo);
             }
             _driver.Quit();
@@ -48,6 +62,7 @@ namespace SeleniumTests
         private void TakeScreenshot(string info)
         {
             var screenshotDriver = _driver as ITakesScreenshot;
+
             string time = DateTime.Now.ToString("yyyy-MM-dd-hhmm-ss");
             screenshotDriver.GetScreenshot().SaveAsFile(time + info + ".png", ImageFormat.Png);
         }

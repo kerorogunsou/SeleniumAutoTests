@@ -1,14 +1,20 @@
-﻿using OpenQA.Selenium;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using OpenQA.Selenium;
+
 
 namespace SeleniumTests
 {
-    public class MainPage : Page
+    public class MainPage : PageBase
     {
+        /// <summary>
+        /// page url
+        /// </summary>
         public const string Url = "http://abbyy-ls.ru/";
-        public const int ImageCount = 5;
 
-        string[] _tabLinkTexts = new string[ImageCount] {
+        private const int _imageCount = 5;
+
+        private readonly string[] _tabLinkTexts = new string[_imageCount] {
             "Управление переводом",
             "Снижение издержек",
             "Инновации сервиса",
@@ -16,7 +22,7 @@ namespace SeleniumTests
             "Автоматизация процессов"
         };
 
-        string[] _imagesCss = new string[ImageCount] {
+        private readonly string[] _imagesCss = new string[_imageCount] {
             ".frontslider2-rightcol-item.slide.item1 .frontslider2bg",
             ".frontslider2-rightcol-item.slide.item5 .frontslider2bg",
             ".frontslider2-rightcol-item.slide.item3 .frontslider2bg",
